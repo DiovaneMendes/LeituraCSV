@@ -9,11 +9,14 @@ public class LeituraDeCSV {
 
     }
 
-    private String[] lerTitulos() throws IOException {
+    public List<String> lerColuna(String titulo) throws IOException {
+        int indice = buscaIndiceTitulo(titulo);
+
         return Files.lines(Paths.get("data.csv"))
-                    .findFirst()
-                    .toString()
-                    .split(",");
+                .skip(1)
+                .map(linha -> linha.split(","))
+                .map(s -> s[indice])
+                .collect(Collectors.toList());
     }
 
     private int buscaIndiceTitulo(String titulo) throws IOException {
@@ -27,16 +30,14 @@ public class LeituraDeCSV {
                 break;
             }
         }
+
         return contador;
     }
 
-    public List<String> lerColuna(String titulo) throws IOException {
-        int quero = buscaIndiceTitulo(titulo);
-
+    private String[] lerTitulos() throws IOException {
         return Files.lines(Paths.get("data.csv"))
-                    .skip(1)
-                    .map(linha -> linha.split(","))
-                    .map(s -> s[quero])
-                    .collect(Collectors.toList());
+                    .findFirst()
+                    .toString()
+                    .split(",");
     }
 }
