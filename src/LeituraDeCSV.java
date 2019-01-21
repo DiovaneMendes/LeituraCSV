@@ -13,10 +13,10 @@ public class LeituraDeCSV {
         int indice = buscaIndiceTitulo(titulo);
 
         return Files.lines(Paths.get("data.csv"))
-                .skip(1)
-                .map(linha -> linha.split(","))
-                .map(s -> s[indice])
-                .collect(Collectors.toList());
+                    .skip(1)
+                    .map(linha -> linha.split(","))
+                    .map(s -> s[indice])
+                    .collect(Collectors.toList());
     }
 
     private int buscaIndiceTitulo(String titulo) throws IOException {
