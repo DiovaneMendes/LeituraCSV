@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        System.out.println();
+        System.out.println(q2());
     }
 
     // Quantas nacionalidades (coluna `nationality`) diferentes existem no arquivo? = OK
@@ -19,8 +19,11 @@ public class Main {
 
     // Quantos clubes (coluna `club`) diferentes existem no arquivo?
     // Obs: Existem jogadores sem clube.
-    private static int q2() {
-        return 0;
+    private static int q2() throws IOException {
+        return (int) new HashSet<>(leitura.lerColuna("club"))
+                    .stream()
+                    .filter(s -> !s.equals(""))
+                    .count();
     }
 
     // Liste o primeiro nome (coluna `full_name`) dos 20 primeiros jogadores.
