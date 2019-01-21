@@ -1,14 +1,15 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
     private static LeituraDeCSV leitura = new LeituraDeCSV();
 
     public static void main(String[] args) throws IOException {
-
-        System.out.println(q2());
+        q3().forEach(System.out::println);
     }
 
     // Quantas nacionalidades (coluna `nationality`) diferentes existem no arquivo? = OK
@@ -21,14 +22,27 @@ public class Main {
     // Obs: Existem jogadores sem clube.
     private static int q2() throws IOException {
         return (int) new HashSet<>(leitura.lerColuna("club"))
-                    .stream()
-                    .filter(s -> !s.equals(""))
-                    .count();
+                .stream()
+                .filter(s -> !s.equals(""))
+                .count();
     }
 
     // Liste o primeiro nome (coluna `full_name`) dos 20 primeiros jogadores.
-    private static List<String> q3() {
-        return null;
+    private static List<String> q3() throws IOException {
+        List<Object> nomes = new ArrayList<>();
+        Object[] a = leitura.lerColuna("full_name")
+                            .stream()
+                            .map(s -> s.split(" "))
+                            .map(strings -> strings[0])
+                            .toArray();
+
+        for(int i=0; i<10; i++){
+            nomes.add(a[i]);
+        }
+
+        return nomes.stream()
+                .map(Object::toString)
+                .collect(Collectors.toList());
     }
 
     // Quem são os top 10 jogadores que possuem as maiores cláusulas de rescisão?
