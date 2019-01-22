@@ -50,24 +50,32 @@ public class Main {
         int tamanhoArray = leitura.lerColuna("name").size();
 
         String []nomes = new String [tamanhoArray];
-        Double []clausulas = new Double[tamanhoArray];
-        Map<String, Double> jogadores = new HashMap<>();
+        String []clausulas = new String[tamanhoArray];
+        Map<String, String> jogadores = new HashMap<>();
 
-        nomes = leitura.lerColuna("full_name").toArray(nomes);
-        clausulas = leitura.lerColuna("eur_release_clause")
-                            .stream()
-                            .map(Double::new)
-                            .collect(Collectors.toList())
-                            .toArray(clausulas);
+        List<String> listaNomes = leitura.lerColuna("full_name");
+        List<String> listaClausulas = leitura.lerColuna("eur_release_clause");
+        List<String> topMaioresClausulas = new ArrayList<>();
 
+        nomes = listaNomes.toArray(nomes);
+        clausulas = listaClausulas.toArray(clausulas);
 
         for(int i=0; i<tamanhoArray; i++){
             jogadores.put(nomes[i], clausulas[i]);
         }
 
-        for (Map.Entry<String, Double> entrada : jogadores.entrySet()) {
-            System.out.println(entrada.getValue());
+        for(int i=0; i<5; i++){
+            String maiorClausula = listaClausulas.stream()
+                                                .filter(s -> !topMaioresClausulas.contains(s))
+                                                .max(Comparator.comparingDouble(Double::valueOf))
+                                                .get();
+
+            topMaioresClausulas.add(maiorClausula);
         }
+
+//        for (Map.Entry<String, Double> entrada : jogadores.entrySet()) {
+//            System.out.println(entrada.getValue());
+//        }
     }
 
     // Quem são os 10 jogadores mais velhos (use como critério de desempate o campo `eur_wage`)?
