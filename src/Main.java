@@ -1,15 +1,12 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
     private static LeituraDeCSV leitura = new LeituraDeCSV();
 
     public static void main(String[] args) throws IOException {
-        q3().forEach(System.out::println);
+        q4();
     }
 
     // Quantas nacionalidades (coluna `nationality`) diferentes existem no arquivo? = OK
@@ -48,20 +45,29 @@ public class Main {
 
     // Quem são os top 10 jogadores que possuem as maiores cláusulas de rescisão?
     // (utilize as colunas `full_name` e `eur_release_clause`)
-    private static List<String> q4() throws IOException{
-        leitura.lerColuna("full_name");
-        leitura.lerColuna("eur_release_clause");
+    private static void q4() throws IOException{
 
-        List<String> listaNomes = new ArrayList<>();
-        List<String> listaClausulas = new ArrayList<>();
+        int tamanhoArray = leitura.lerColuna("name").size();
 
-        for(int i=0; i<10; i++) {
-            int maiorClausula = leitura.lerColuna("eur_release_clause")
-                    .stream()
-                    
+        String []nomes = new String [tamanhoArray];
+        Double []clausulas = new Double[tamanhoArray];
+        Map<String, Double> jogadores = new HashMap<>();
+
+        nomes = leitura.lerColuna("full_name").toArray(nomes);
+        clausulas = leitura.lerColuna("eur_release_clause")
+                            .stream()
+                            .map(Double::new)
+                            .collect(Collectors.toList())
+                            .toArray(clausulas);
+
+
+        for(int i=0; i<tamanhoArray; i++){
+            jogadores.put(nomes[i], clausulas[i]);
         }
 
-            return null;
+        for (Map.Entry<String, Double> entrada : jogadores.entrySet()) {
+            System.out.println(entrada.getValue());
+        }
     }
 
     // Quem são os 10 jogadores mais velhos (use como critério de desempate o campo `eur_wage`)?
@@ -70,7 +76,8 @@ public class Main {
         return null;
     }
 
-    // Conte quantos jogadores existem por idade. Para isso, construa um mapa onde as chaves são as idades e os valores a contagem.
+    // Conte quantos jogadores existem por idade. Para isso, construa um mapa onde as
+    // chaves são as idades e os valores a contagem.
     // (utilize a coluna `age`)
     private static Map<Integer, Integer> q6() {
         return null;
