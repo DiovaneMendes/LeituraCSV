@@ -30,6 +30,7 @@ public class Main {
     // Liste o primeiro nome (coluna `full_name`) dos 20 primeiros jogadores.
     private static List<String> q3() throws IOException {
         List<Object> nomes = new ArrayList<>();
+
         Object[] a = leitura.lerColuna("full_name")
                             .stream()
                             .map(s -> s.split(" "))
@@ -41,14 +42,26 @@ public class Main {
         }
 
         return nomes.stream()
-                .map(Object::toString)
-                .collect(Collectors.toList());
+                    .map(Object::toString)
+                    .collect(Collectors.toList());
     }
 
     // Quem são os top 10 jogadores que possuem as maiores cláusulas de rescisão?
     // (utilize as colunas `full_name` e `eur_release_clause`)
-    private static List<String> q4() {
-        return null;
+    private static List<String> q4() throws IOException{
+        leitura.lerColuna("full_name");
+        leitura.lerColuna("eur_release_clause");
+
+        List<String> listaNomes = new ArrayList<>();
+        List<String> listaClausulas = new ArrayList<>();
+
+        for(int i=0; i<10; i++) {
+            int maiorClausula = leitura.lerColuna("eur_release_clause")
+                    .stream()
+                    
+        }
+
+            return null;
     }
 
     // Quem são os 10 jogadores mais velhos (use como critério de desempate o campo `eur_wage`)?
