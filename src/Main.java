@@ -123,9 +123,9 @@ public class Main {
             }
         }
         ;
-        Function<LocalDate, Integer> calculadoraIdade = (dataNascimento) -> Period
-                .between(dataNascimento, LocalDate.now())
-                .getYears();
+//        Function<LocalDate, Integer> calculadoraIdade = (dataNascimento) -> Period
+//                .between(dataNascimento, LocalDate.now())
+//                .getYears();
 
         listaNomes.forEach(System.out::println);
     }
