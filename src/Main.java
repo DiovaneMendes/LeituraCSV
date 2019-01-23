@@ -91,42 +91,42 @@ public class Main {
         leitura.lerColuna("eur_wage");
 
         String []nome = new String [tamanhoArray()];
-        String []dataNascimento = new String[tamanhoArray()];
-        Map<String, String> jogadores = new HashMap<>();
+        Integer []dataNascimento = new Integer[tamanhoArray()];
+        Map<Integer, String> jogadores = new HashMap<>();
 
         List<String> listaNomes = new ArrayList<>();
-        List<String> maisVelhos = new ArrayList<>();
-        List<LocalDate> listaDataNascimento = leitura.lerColuna("birth_date").stream()
-                .map(data -> data.split("-"))
-                .map(data -> LocalDate.of(Integer.valueOf(data[0]), Integer.valueOf(data[1]), Integer.valueOf(data[2])))
+        List<Integer> maisVelhos = new ArrayList<>();
+        List<Integer> listaIdades = leitura.lerColuna("birth_date").stream()
+                .map(string -> string.split("-"))
+                .map(data -> LocalDate.of(Integer.valueOf(data[0]),
+                        Integer.valueOf(data[1]),
+                        Integer.valueOf(data[2])))
+                .map(data -> Period.between(data, LocalDate.now())
+                        .getYears())
                 .collect(Collectors.toList());
 
         nome = leitura.lerColuna("full_name").toArray(nome);
-        dataNascimento = listaDataNascimento.toArray(dataNascimento);
+        dataNascimento = listaIdades.toArray(dataNascimento);
 
         for(int i=0; i<tamanhoArray(); i++){
             jogadores.put(dataNascimento[i], nome[i]);
         }
 
-        for(int i=0; i<10; i++){
-            String maiorClausula = listaDataNascimento.stream()
-                                                    .filter(s -> !maisVelhos.contains(s))
-                                                    .max(Comparator.comparingDouble(Double::valueOf))
-                                                    .get();
+        for(int i=0; i<5; i++){
+            Integer maiorIdade = listaIdades.stream()
+                .filter(s -> !maisVelhos.contains(s))
+                .max(Comparator.comparingInt(Integer::valueOf))
+                .get();
 
-            maisVelhos.add(maiorClausula);
+            maisVelhos.add(maiorIdade);
         }
 
-        for (Map.Entry<String, String> mapaJogador : jogadores.entrySet()) {
+        for (Map.Entry<Integer, String> mapaJogador : jogadores.entrySet()) {
             if(maisVelhos.contains(mapaJogador.getKey())){
                 listaNomes.add(mapaJogador.getValue());
             }
         }
-        ;
-//        Function<LocalDate, Integer> calculadoraIdade = (dataNascimento) -> Period
-//                .between(dataNascimento, LocalDate.now())
-//                .getYears();
-
+        
         listaNomes.forEach(System.out::println);
     }
 
