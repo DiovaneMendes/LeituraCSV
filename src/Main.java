@@ -126,7 +126,7 @@ public class Main {
                 listaNomes.add(mapaJogador.getValue());
             }
         }
-        
+
         listaNomes.forEach(System.out::println);
     }
 
