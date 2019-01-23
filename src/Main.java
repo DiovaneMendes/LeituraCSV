@@ -1,12 +1,15 @@
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
     private static LeituraDeCSV leitura = new LeituraDeCSV();
 
     public static void main(String[] args) throws IOException {
-        q4();
+        q5();
     }
 
     // Quantas nacionalidades (coluna `nationality`) diferentes existem no arquivo? = OK
@@ -47,21 +50,19 @@ public class Main {
     // (utilize as colunas `full_name` e `eur_release_clause`)
     private static List<String> q4() throws IOException{
 
-        int tamanhoArray = leitura.lerColuna("name").size();
-
-        String []nomes = new String [tamanhoArray];
-        String []clausulas = new String[tamanhoArray];
+        String []nome = new String [tamanhoArray()];
+        String []clausula = new String[tamanhoArray()];
         Map<String, String> jogadores = new HashMap<>();
 
         List<String> listaNomes = new ArrayList<>();
         List<String> listaClausulas = leitura.lerColuna("eur_release_clause");
         List<String> topMaioresClausulas = new ArrayList<>();
 
-        nomes = leitura.lerColuna("full_name").toArray(nomes);
-        clausulas = listaClausulas.toArray(clausulas);
+        nome = leitura.lerColuna("full_name").toArray(nome);
+        clausula = listaClausulas.toArray(clausula);
 
-        for(int i=0; i<tamanhoArray; i++){
-            jogadores.put(clausulas[i], nomes[i]);
+        for(int i=0; i<tamanhoArray(); i++){
+            jogadores.put(clausula[i], nome[i]);
         }
 
         for(int i=0; i<10; i++){
@@ -84,8 +85,49 @@ public class Main {
 
     // Quem são os 10 jogadores mais velhos (use como critério de desempate o campo `eur_wage`)?
     // (utilize as colunas `full_name` e `birth_date`)
-    private static List<String> q5() {
-        return null;
+    private static void q5() throws IOException {
+        leitura.lerColuna("full_name");
+        leitura.lerColuna("birth_date");
+        leitura.lerColuna("eur_wage");
+
+        String []nome = new String [tamanhoArray()];
+        String []dataNascimento = new String[tamanhoArray()];
+        Map<String, String> jogadores = new HashMap<>();
+
+        List<String> listaNomes = new ArrayList<>();
+        List<String> maisVelhos = new ArrayList<>();
+        List<LocalDate> listaDataNascimento = leitura.lerColuna("birth_date").stream()
+                .map(data -> data.split("-"))
+                .map(data -> LocalDate.of(Integer.valueOf(data[0]), Integer.valueOf(data[1]), Integer.valueOf(data[2])))
+                .collect(Collectors.toList());
+
+        nome = leitura.lerColuna("full_name").toArray(nome);
+        dataNascimento = listaDataNascimento.toArray(dataNascimento);
+
+        for(int i=0; i<tamanhoArray(); i++){
+            jogadores.put(dataNascimento[i], nome[i]);
+        }
+
+        for(int i=0; i<10; i++){
+            String maiorClausula = listaDataNascimento.stream()
+                                                    .filter(s -> !maisVelhos.contains(s))
+                                                    .max(Comparator.comparingDouble(Double::valueOf))
+                                                    .get();
+
+            maisVelhos.add(maiorClausula);
+        }
+
+        for (Map.Entry<String, String> mapaJogador : jogadores.entrySet()) {
+            if(maisVelhos.contains(mapaJogador.getKey())){
+                listaNomes.add(mapaJogador.getValue());
+            }
+        }
+        ;
+        Function<LocalDate, Integer> calculadoraIdade = (dataNascimento) -> Period
+                .between(dataNascimento, LocalDate.now())
+                .getYears();
+
+        listaNomes.forEach(System.out::println);
     }
 
     // Conte quantos jogadores existem por idade. Para isso, construa um mapa onde as
@@ -93,5 +135,9 @@ public class Main {
     // (utilize a coluna `age`)
     private static Map<Integer, Integer> q6() {
         return null;
+    }
+
+    private static int tamanhoArray() throws IOException {
+        return leitura.lerColuna("name").size();
     }
 }
