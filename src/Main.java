@@ -45,7 +45,7 @@ public class Main {
 
     // Quem são os top 10 jogadores que possuem as maiores cláusulas de rescisão?
     // (utilize as colunas `full_name` e `eur_release_clause`)
-    private static void q4() throws IOException{
+    private static List<String> q4() throws IOException{
 
         int tamanhoArray = leitura.lerColuna("name").size();
 
@@ -53,18 +53,18 @@ public class Main {
         String []clausulas = new String[tamanhoArray];
         Map<String, String> jogadores = new HashMap<>();
 
-        List<String> listaNomes = leitura.lerColuna("full_name");
+        List<String> listaNomes = new ArrayList<>();
         List<String> listaClausulas = leitura.lerColuna("eur_release_clause");
         List<String> topMaioresClausulas = new ArrayList<>();
 
-        nomes = listaNomes.toArray(nomes);
+        nomes = leitura.lerColuna("full_name").toArray(nomes);
         clausulas = listaClausulas.toArray(clausulas);
 
         for(int i=0; i<tamanhoArray; i++){
-            jogadores.put(nomes[i], clausulas[i]);
+            jogadores.put(clausulas[i], nomes[i]);
         }
 
-        for(int i=0; i<5; i++){
+        for(int i=0; i<10; i++){
             String maiorClausula = listaClausulas.stream()
                                                 .filter(s -> !topMaioresClausulas.contains(s))
                                                 .max(Comparator.comparingDouble(Double::valueOf))
@@ -73,9 +73,13 @@ public class Main {
             topMaioresClausulas.add(maiorClausula);
         }
 
-//        for (Map.Entry<String, Double> entrada : jogadores.entrySet()) {
-//            System.out.println(entrada.getValue());
-//        }
+        for (Map.Entry<String, String> mapaJogador : jogadores.entrySet()) {
+            if(topMaioresClausulas.contains(mapaJogador.getKey())){
+                listaNomes.add(mapaJogador.getValue());
+            }
+        }
+
+        return listaNomes;
     }
 
     // Quem são os 10 jogadores mais velhos (use como critério de desempate o campo `eur_wage`)?
