@@ -4,27 +4,28 @@ import java.time.Period;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     private static LeituraDeCSV leitura = new LeituraDeCSV();
 
     public static void main(String[] args) throws IOException {
-        q5();
+        q5().forEach(System.out::println);
     }
 
     // Quantas nacionalidades (coluna `nationality`) diferentes existem no arquivo? = OK
     private static int q1() throws IOException {
         return new HashSet<>(leitura.lerColuna("nationality"))
-                .size();
+            .size();
     }
 
     // Quantos clubes (coluna `club`) diferentes existem no arquivo?
     // Obs: Existem jogadores sem clube.
     private static int q2() throws IOException {
         return (int) new HashSet<>(leitura.lerColuna("club"))
-                .stream()
-                .filter(s -> !s.equals(""))
-                .count();
+            .stream()
+            .filter(s -> !s.equals(""))
+            .count();
     }
 
     // Liste o primeiro nome (coluna `full_name`) dos 20 primeiros jogadores.
@@ -32,25 +33,25 @@ public class Main {
         List<Object> nomes = new ArrayList<>();
 
         Object[] a = leitura.lerColuna("full_name")
-                            .stream()
-                            .map(s -> s.split(" "))
-                            .map(strings -> strings[0])
-                            .toArray();
+            .stream()
+            .map(s -> s.split(" "))
+            .map(strings -> strings[0])
+            .toArray();
 
         for(int i=0; i<10; i++){
             nomes.add(a[i]);
         }
 
         return nomes.stream()
-                    .map(Object::toString)
-                    .collect(Collectors.toList());
+            .map(Object::toString)
+            .collect(Collectors.toList());
     }
 
     // Quem são os top 10 jogadores que possuem as maiores cláusulas de rescisão?
     // (utilize as colunas `full_name` e `eur_release_clause`)
     private static List<String> q4() throws IOException{
 
-        String []nome = new String [tamanhoArray()];
+        String []nome = new String[tamanhoArray()];
         String []clausula = new String[tamanhoArray()];
         Map<String, String> jogadores = new HashMap<>();
 
@@ -67,9 +68,9 @@ public class Main {
 
         for(int i=0; i<10; i++){
             String maiorClausula = listaClausulas.stream()
-                                                .filter(s -> !topMaioresClausulas.contains(s))
-                                                .max(Comparator.comparingDouble(Double::valueOf))
-                                                .get();
+                .filter(s -> !topMaioresClausulas.contains(s))
+                .max(Comparator.comparingDouble(Double::valueOf))
+                .get();
 
             topMaioresClausulas.add(maiorClausula);
         }
@@ -85,49 +86,68 @@ public class Main {
 
     // Quem são os 10 jogadores mais velhos (use como critério de desempate o campo `eur_wage`)?
     // (utilize as colunas `full_name` e `birth_date`)
-    private static void q5() throws IOException {
-        leitura.lerColuna("full_name");
-        leitura.lerColuna("birth_date");
-        leitura.lerColuna("eur_wage");
+    private static List<String> q5() throws IOException {
 
-        String []nome = new String [tamanhoArray()];
-        Integer []dataNascimento = new Integer[tamanhoArray()];
-        Map<Integer, String> jogadores = new HashMap<>();
+        List<Jogador> listaJogadores = new ArrayList<>();
+        List<String> listaJogadoresMaisVelhos = new ArrayList<>();
+        List<Integer> idadesJaVerificadas = new ArrayList<>();
 
-        List<String> listaNomes = new ArrayList<>();
-        List<Integer> maisVelhos = new ArrayList<>();
-        List<Integer> listaIdades = leitura.lerColuna("birth_date").stream()
+        String []nome = new String[tamanhoArray()];
+        LocalDate []dataNascimento = new LocalDate[tamanhoArray()];
+        Double []salario = new Double[tamanhoArray()];
+
+        nome = leitura.lerColuna("full_name").toArray(nome);
+
+        dataNascimento = leitura.lerColuna("birth_date").stream()
                 .map(string -> string.split("-"))
                 .map(data -> LocalDate.of(Integer.valueOf(data[0]),
                         Integer.valueOf(data[1]),
                         Integer.valueOf(data[2])))
-                .map(data -> Period.between(data, LocalDate.now())
-                        .getYears())
+                .collect(Collectors.toList())
+                .toArray(dataNascimento);
+
+        salario = leitura.lerColuna("eur_wage").stream()
+                .map(Double::new)
+                .collect(Collectors.toList())
+                .toArray(salario);
+
+        List<Integer> listaIdades = Arrays.stream(dataNascimento)
+                .mapToInt(idade -> calculaIdade(idade))
+                .boxed()
                 .collect(Collectors.toList());
 
-        nome = leitura.lerColuna("full_name").toArray(nome);
-        dataNascimento = listaIdades.toArray(dataNascimento);
-
-        for(int i=0; i<tamanhoArray(); i++){
-            jogadores.put(dataNascimento[i], nome[i]);
+        for(int i=0; i<tamanhoArray(); i++) {
+            listaJogadores.add(new Jogador(nome[i], dataNascimento[i], salario[i]));
         }
 
-        for(int i=0; i<5; i++){
-            Integer maiorIdade = listaIdades.stream()
-                .filter(s -> !maisVelhos.contains(s))
-                .max(Comparator.comparingInt(Integer::valueOf))
-                .get();
+        for(int i=0; i<10; i++){
+            List<Jogador> listaApoio = new ArrayList<>();
 
-            maisVelhos.add(maiorIdade);
-        }
+            int maisVelho = listaIdades.stream()
+                    .filter(idade -> !idadesJaVerificadas.contains(idade))
+                    .max(Comparator.comparingInt(Integer::intValue))
+                    .orElse(0);
 
-        for (Map.Entry<Integer, String> mapaJogador : jogadores.entrySet()) {
-            if(maisVelhos.contains(mapaJogador.getKey())){
-                listaNomes.add(mapaJogador.getValue());
+            idadesJaVerificadas.add(maisVelho);
+
+            for(Jogador jogador : listaJogadores){
+                if(maisVelho != 0 && calculaIdade(jogador.getDataNascimento()) == maisVelho){
+                    listaApoio.add(jogador);
+                }
+            }
+
+            Double maiorSalarioDaListaApoio = listaApoio.stream()
+                    .mapToDouble(Jogador::getSalario)
+                    .max()
+                    .orElse(0L);
+
+            for(Jogador jogador: listaApoio){
+                if(jogador.getSalario().equals(maiorSalarioDaListaApoio)){
+                    listaJogadoresMaisVelhos.add(jogador.getNome());
+                }
             }
         }
-        
-        listaNomes.forEach(System.out::println);
+        return listaJogadoresMaisVelhos;
     }
 
     // Conte quantos jogadores existem por idade. Para isso, construa um mapa onde as
@@ -139,5 +159,10 @@ public class Main {
 
     private static int tamanhoArray() throws IOException {
         return leitura.lerColuna("name").size();
+    }
+
+    private static int calculaIdade(LocalDate dataNascimento){
+        return Period.between(dataNascimento, LocalDate.now())
+                .getYears();
     }
 }
