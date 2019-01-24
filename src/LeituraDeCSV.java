@@ -30,7 +30,6 @@ public class LeituraDeCSV {
                 break;
             }
         }
-
         return contador;
     }
 
