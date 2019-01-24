@@ -16,24 +16,12 @@ public class Jogador {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
     public Double getSalario() {
         return salario;
-    }
-
-    public void setSalario(Double salario) {
-        this.salario = salario;
     }
 
     @Override
