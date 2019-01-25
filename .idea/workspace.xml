@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c6b4185-0a24-4f2d-b81b-7bfd0f3adb1a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/OperacaoTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LeituraCSV.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LeituraCSV.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Operacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Operacao.java" afterDir="false" />
     </list>
@@ -18,23 +20,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-              <folding>
-                <element signature="e#324#325#0" expanded="true" />
-                <element signature="e#372#373#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="5" column="53" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Operacao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="198" column="35" selection-start-line="198" selection-start-column="35" selection-end-line="198" selection-end-column="35" />
+            <state relative-caret-position="114">
+              <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#primeiroNomeDosVintesPrimeirosJogadores#0;class#Operacao#0" />
+                <element signature="method#nomeJogadoresDezMaioresRescisoes#0;class#Operacao#0" />
+                <element signature="method#dezJogadoresMaisVelhos#0;class#Operacao#0" />
+                <element signature="method#q6#0;class#Operacao#0" />
                 <element signature="method#tamanhoArray#0;class#Operacao#0" />
                 <element signature="method#calculaIdade#0;class#Operacao#0" />
               </folding>
@@ -42,11 +44,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/LeituraDeCSV.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/OperacaoTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="240">
+              <caret line="16" column="41" lean-forward="true" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -70,6 +75,7 @@
         <option value="$PROJECT_DIR$/src/LeituraDeCSV.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/Operacao.java" />
+        <option value="$PROJECT_DIR$/src/OperacaoTest.java" />
       </list>
     </option>
   </component>
@@ -105,9 +111,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548375529515" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548377622897" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -128,7 +138,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.OperacaoTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="LeituraCSV" />
@@ -136,8 +146,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="OperacaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="LeituraCSV" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="OperacaoTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.OperacaoTest" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -156,8 +176,40 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 37m 48s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 41m 27s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 43m 47s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 49m 04s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 49m 16s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 52m 07s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 52m 17s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 53m 08s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 53m 21s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="OperacaoTest - 2019.01.24 at 22h 53m 32s.xml">
+      <configuration name="OperacaoTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7370000" />
+    <option name="totallyTimeSpent" value="9468000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1073" y="25" width="1317" height="743" extended-state="6" />
@@ -172,7 +224,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.42019543" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.42019543" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -216,32 +268,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <element signature="e#324#325#0" expanded="true" />
-            <element signature="e#372#373#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/LeituraDeCSV.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="53" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Operacao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="198" column="35" selection-start-line="198" selection-start-column="35" selection-end-line="198" selection-end-column="35" />
+        <state relative-caret-position="114">
+          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#primeiroNomeDosVintesPrimeirosJogadores#0;class#Operacao#0" />
+            <element signature="method#nomeJogadoresDezMaioresRescisoes#0;class#Operacao#0" />
+            <element signature="method#dezJogadoresMaisVelhos#0;class#Operacao#0" />
+            <element signature="method#q6#0;class#Operacao#0" />
             <element signature="method#tamanhoArray#0;class#Operacao#0" />
             <element signature="method#calculaIdade#0;class#Operacao#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/OperacaoTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="41" lean-forward="true" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

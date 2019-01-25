@@ -32,13 +32,13 @@ public class Operacao {
                     .filter(s -> !s.isEmpty())
                     .count();
         } catch (IOException e) {
-            System.out.println("Erro ao ler arquivo CSV!");
+            erro();
         }
         return 0;
     }
 
-    //q3: Liste o primeiro nome (coluna `full_name`) dos 20 primeiros jogadores.
-    public List<String> primeiroNomeDosVintesPrimeirosJogadores(){
+    //q3: Liste o primeiro nome (coluna `full_name`) dos 10 primeiros jogadores.
+    public List<String> primeiroNomeDosDezPrimeirosJogadores(){
         List<Object> nomes = new ArrayList<>();
 
         Object[] nome = new Object[0];
@@ -49,7 +49,7 @@ public class Operacao {
                     .map(strings -> strings[0])
                     .toArray();
         } catch (IOException e) {
-            System.out.println("erro ao ler arquivo CSV!");
+            erro();
         }
 
         for(int i=0; i<10; i++){
@@ -77,7 +77,7 @@ public class Operacao {
             nome = leitura.lerColuna("full_name").toArray(nome);
             clausula = listaClausulas.toArray(clausula);
         }catch(IOException e){
-            System.out.println("Erro na lietura de arquivo CSV!");
+            erro();
         }
 
         for(int i=0; i<tamanhoArray(); i++){
@@ -103,7 +103,7 @@ public class Operacao {
 
     //q5: Quem são os 10 jogadores mais velhos (use como critério de desempate o campo `eur_wage`)?
     // (utilize as colunas `full_name` e `birth_date`)
-    public List<String> dezJogadoresMaisVelhos() throws IOException {
+    public List<String> dezJogadoresMaisVelhos(){
         List<Jogador> listaJogadores = new ArrayList<>();
         List<String> listaJogadoresMaisVelhos = new ArrayList<>();
         List<Integer> idadesJaVerificadas = new ArrayList<>();
@@ -112,20 +112,25 @@ public class Operacao {
         LocalDate []dataNascimento = new LocalDate[tamanhoArray()];
         Double []salario = new Double[tamanhoArray()];
 
-        nome = leitura.lerColuna("full_name").toArray(nome);
+        try{
+            nome = leitura.lerColuna("full_name").toArray(nome);
 
-        dataNascimento = leitura.lerColuna("birth_date").stream()
-                .map(string -> string.split("-"))
-                .map(data -> LocalDate.of(Integer.valueOf(data[0]),
-                        Integer.valueOf(data[1]),
-                        Integer.valueOf(data[2])))
-                .collect(Collectors.toList())
-                .toArray(dataNascimento);
+            dataNascimento = leitura.lerColuna("birth_date").stream()
+                    .map(string -> string.split("-"))
+                    .map(data -> LocalDate.of(Integer.valueOf(data[0]),
+                            Integer.valueOf(data[1]),
+                            Integer.valueOf(data[2])))
+                    .collect(Collectors.toList())
+                    .toArray(dataNascimento);
 
-        salario = leitura.lerColuna("eur_wage").stream()
-                .map(Double::new)
-                .collect(Collectors.toList())
-                .toArray(salario);
+            salario = leitura.lerColuna("eur_wage").stream()
+                    .map(Double::new)
+                    .collect(Collectors.toList())
+                    .toArray(salario);
+
+        }catch(IOException e){
+            erro();
+        }
 
         List<Integer> listaIdades = Arrays.stream(dataNascimento)
                 .mapToInt(idade -> calculaIdade(idade))
@@ -163,6 +168,7 @@ public class Operacao {
                 }
             }
         }
+
         return listaJogadoresMaisVelhos;
     }
 
@@ -182,7 +188,7 @@ public class Operacao {
                     .collect(Collectors.toList());
 
         }catch(IOException e){
-            System.out.println("Erro ao ler arquivo CSV!");
+            erro();
         }
 
         idadesSemRepeticao.addAll(new HashSet<>(listaIdades));
@@ -213,5 +219,9 @@ public class Operacao {
     private int calculaIdade(LocalDate dataNascimento){
         return Period.between(dataNascimento, LocalDate.now())
                 .getYears();
+    }
+
+    private void erro(){
+        System.out.println("Erro ao ler arquivo CSV!");
     }
 }
