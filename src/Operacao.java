@@ -166,11 +166,39 @@ public class Operacao {
         return listaJogadoresMaisVelhos;
     }
 
-    // Conte quantos jogadores existem por idade. Para isso, construa um mapa onde as
+    //q6: Conte quantos jogadores existem por idade. Para isso, construa um mapa onde as
     // chaves são as idades e os valores a contagem.
     // (utilize a coluna `age`)
-    public Map<Integer, Integer> q6() {
-        return null;
+    public Map<Integer, Integer> mapaIdadesEQuantidade() {
+
+        Map<Integer, Integer> mapaIdade = new HashMap<>();
+        List<Integer> listaIdades = new ArrayList<>();
+        List<Integer> idadesSemRepeticao = new ArrayList<>();
+
+        try{
+            listaIdades = leitura.lerColuna("age").stream()
+                    .mapToInt(Integer::valueOf)
+                    .boxed()
+                    .collect(Collectors.toList());
+
+        }catch(IOException e){
+            System.out.println("Erro ao ler arquivo CSV!");
+        }
+
+        idadesSemRepeticao.addAll(new HashSet<>(listaIdades));
+
+        for(Integer idade : idadesSemRepeticao){
+            mapaIdade.put(idade, 0);
+        }
+
+        for(Map.Entry<Integer, Integer> map: mapaIdade.entrySet()){
+            int contador = (int) listaIdades.stream()
+                    .filter(idade -> idade.equals(map.getKey()))
+                    .count();
+
+            map.setValue(contador);
+        }
+        return mapaIdade;
     }
 
     private int tamanhoArray() {
