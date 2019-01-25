@@ -1,8 +1,10 @@
+package testes;
+
+import controller.Operacao;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
-
-import static org.junit.Assert.assertEquals;
 
 public class OperacaoTest {
 
@@ -10,14 +12,14 @@ public class OperacaoTest {
     public void deveRetornarDozeNacoes() {
         Operacao operacao = new Operacao();
 
-        assertEquals(12, operacao.numeroDeNacoes());
+        Assert.assertEquals(12, operacao.numeroDeNacoes());
     }
 
     @Test
     public void deveRetornarNoveClubs() {
         Operacao operacao = new Operacao();
 
-        assertEquals(9, operacao.numeroDeclubs());
+        Assert.assertEquals(9, operacao.numeroDeclubs());
     }
 
     @Test
@@ -27,7 +29,7 @@ public class OperacaoTest {
         List<String> nomes = Arrays.asList("C.", "Lionel", "Neymar", "Luis", "Manuel", "Robert",
                                             "David", "Eden", "Toni", "Gonzalo");
 
-        assertEquals(nomes, operacao.primeiroNomeDosDezPrimeirosJogadores());
+        Assert.assertEquals(nomes, operacao.primeiroNomeDosDezPrimeirosJogadores());
     }
 
     @Test
@@ -38,7 +40,7 @@ public class OperacaoTest {
                                             "Toni Kroos", "Kevin De Bruyne", "Gonzalo Higuaín", "Eden Hazard",
                                             "Gareth Bale", "Lionel Messi", "C. Ronaldo dos Santos Aveiro");
 
-        assertEquals(nomes, operacao.nomeJogadoresDezMaioresRescisoes());
+        Assert.assertEquals(nomes, operacao.nomeJogadoresDezMaioresRescisoes());
     }
 
     @Test
@@ -49,7 +51,7 @@ public class OperacaoTest {
                                             "Luis Suárez", "Lionel Messi", "Robert Lewandowski", "Gareth Bale",
                                             "Eden Hazard", "Kevin De Bruyne", "Neymar da Silva Santos Jr.");
 
-        assertEquals(nomes, operacao.dezJogadoresMaisVelhos());
+        Assert.assertEquals(nomes, operacao.dezJogadoresMaisVelhos());
     }
 
     @Test
@@ -68,6 +70,6 @@ public class OperacaoTest {
         mapaIdade.put(30, 2);
         mapaIdade.put(31, 3);
 
-        assertEquals(mapaIdade, operacao.mapaIdadesEQuantidade());
+        Assert.assertEquals(mapaIdade, operacao.mapaIdadesEQuantidade());
     }
 }

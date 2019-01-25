@@ -1,4 +1,7 @@
-import java.io.IOException;
+package controller;
+
+import model.Jogador;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
@@ -14,71 +17,43 @@ public class Operacao {
 
     //q1: Quantas nacionalidades (coluna `nationality`) diferentes existem no arquivo? = OK
     public int numeroDeNacoes(){
-        try {
-            return new HashSet<>(leitura.lerColuna("nationality"))
+        return new HashSet<>(leitura.lerColuna("nationality"))
                     .size();
-        } catch (IOException e) {
-            System.out.println("Erro ao ler arquivo CSV!");
-        }
-        return 0;
     }
 
     //q2: Quantos clubes (coluna `club`) diferentes existem no arquivo?
     // Obs: Existem jogadores sem clube.
     public int numeroDeclubs(){
-        try {
-            return (int) new HashSet<>(leitura.lerColuna("club"))
+        return (int) new HashSet<>(leitura.lerColuna("club"))
                     .stream()
                     .filter(s -> !s.isEmpty())
                     .count();
-        } catch (IOException e) {
-            erro();
-        }
-        return 0;
     }
 
     //q3: Liste o primeiro nome (coluna `full_name`) dos 10 primeiros jogadores.
     public List<String> primeiroNomeDosDezPrimeirosJogadores(){
-        List<Object> nomes = new ArrayList<>();
-
-        Object[] nome = new Object[0];
-        try {
-            nome = leitura.lerColuna("full_name")
+        return leitura.lerColuna("full_name")
                     .stream()
                     .map(s -> s.split(" "))
                     .map(strings -> strings[0])
-                    .toArray();
-        } catch (IOException e) {
-            erro();
-        }
-
-        for(int i=0; i<10; i++){
-            nomes.add(nome[i]);
-        }
-
-        return nomes.stream()
-                .map(Object::toString)
-                .collect(Collectors.toList());
+                    .limit(10)
+                    .collect(Collectors.toList());
     }
 
     //q4: Quem são os top 10 jogadores que possuem as maiores cláusulas de rescisão?
     // (utilize as colunas `full_name` e `eur_release_clause`)
     public List<String> nomeJogadoresDezMaioresRescisoes(){
-        List<String> listaClausulas = null;
-        String []nome = new String [tamanhoArray()];
-        String []clausula = new String[tamanhoArray()];
+        List<String> listaClausulas = leitura.lerColuna("eur_release_clause");
+        String[] nome = new String [tamanhoArray()];
+        String[] clausula = new String[tamanhoArray()];
         Map<String, String> jogadores = new HashMap<>();
 
         List<String> listaNomes = new ArrayList<>();
         List<String> topMaioresClausulas = new ArrayList<>();
 
-        try{
-            listaClausulas = leitura.lerColuna("eur_release_clause");
-            nome = leitura.lerColuna("full_name").toArray(nome);
-            clausula = listaClausulas.toArray(clausula);
-        }catch(IOException e){
-            erro();
-        }
+
+        nome = leitura.lerColuna("full_name").toArray(nome);
+        clausula = listaClausulas.toArray(clausula);
 
         for(int i=0; i<tamanhoArray(); i++){
             jogadores.put(clausula[i], nome[i]);
@@ -108,29 +83,24 @@ public class Operacao {
         List<String> listaJogadoresMaisVelhos = new ArrayList<>();
         List<Integer> idadesJaVerificadas = new ArrayList<>();
 
-        String []nome = new String[tamanhoArray()];
-        LocalDate []dataNascimento = new LocalDate[tamanhoArray()];
-        Double []salario = new Double[tamanhoArray()];
+        String[] nome = new String[tamanhoArray()];
+        LocalDate[] dataNascimento = new LocalDate[tamanhoArray()];
+        Double[] salario = new Double[tamanhoArray()];
 
-        try{
-            nome = leitura.lerColuna("full_name").toArray(nome);
+        nome = leitura.lerColuna("full_name").toArray(nome);
 
-            dataNascimento = leitura.lerColuna("birth_date").stream()
-                    .map(string -> string.split("-"))
-                    .map(data -> LocalDate.of(Integer.valueOf(data[0]),
-                            Integer.valueOf(data[1]),
-                            Integer.valueOf(data[2])))
-                    .collect(Collectors.toList())
-                    .toArray(dataNascimento);
+        dataNascimento = leitura.lerColuna("birth_date").stream()
+                .map(string -> string.split("-"))
+                .map(data -> LocalDate.of(Integer.valueOf(data[0]),
+                        Integer.valueOf(data[1]),
+                        Integer.valueOf(data[2])))
+                .collect(Collectors.toList())
+                .toArray(dataNascimento);
 
-            salario = leitura.lerColuna("eur_wage").stream()
-                    .map(Double::new)
-                    .collect(Collectors.toList())
-                    .toArray(salario);
-
-        }catch(IOException e){
-            erro();
-        }
+        salario = leitura.lerColuna("eur_wage").stream()
+                .map(Double::new)
+                .collect(Collectors.toList())
+                .toArray(salario);
 
         List<Integer> listaIdades = Arrays.stream(dataNascimento)
                 .mapToInt(idade -> calculaIdade(idade))
@@ -178,18 +148,13 @@ public class Operacao {
     public Map<Integer, Integer> mapaIdadesEQuantidade() {
 
         Map<Integer, Integer> mapaIdade = new HashMap<>();
-        List<Integer> listaIdades = new ArrayList<>();
+        List<Integer> listaIdades;
         List<Integer> idadesSemRepeticao = new ArrayList<>();
 
-        try{
-            listaIdades = leitura.lerColuna("age").stream()
-                    .mapToInt(Integer::valueOf)
-                    .boxed()
-                    .collect(Collectors.toList());
-
-        }catch(IOException e){
-            erro();
-        }
+        listaIdades = leitura.lerColuna("age").stream()
+                .mapToInt(Integer::valueOf)
+                .boxed()
+                .collect(Collectors.toList());
 
         idadesSemRepeticao.addAll(new HashSet<>(listaIdades));
 
@@ -208,20 +173,11 @@ public class Operacao {
     }
 
     private int tamanhoArray() {
-        try {
-            return leitura.lerColuna("name").size();
-        } catch (IOException e) {
-            System.out.println("Erro ao ler arquivo CSV!");
-        }
-        return 0;
+        return leitura.lerColuna("ID").size();
     }
 
     private int calculaIdade(LocalDate dataNascimento){
         return Period.between(dataNascimento, LocalDate.now())
                 .getYears();
-    }
-
-    private void erro(){
-        System.out.println("Erro ao ler arquivo CSV!");
     }
 }
