@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LeituraCSVTest {
 
@@ -25,26 +26,26 @@ public class LeituraCSVTest {
                                             "Spanish Primera División", "English Premier League", "Italian Serie A",
                                             "Italian Serie A");
 
-        Assert.assertEquals(nacao, leitura.lerColuna("nationality"));
-        Assert.assertEquals(liga, leitura.lerColuna("league"));
+        Assert.assertEquals(nacao, leitura.lerColuna("nationality").stream().limit(19).collect(Collectors.toList()));
+        Assert.assertEquals(liga, leitura.lerColuna("league").stream().limit(19).collect(Collectors.toList()));
     }
 
     @Test
     public void deveRetornarIndiceDoTitulo(){
         LeituraDeCSV leitura = new LeituraDeCSV();
 
-        Assert.assertEquals(6, leitura.buscaIndiceTitulo("league"));
-        Assert.assertEquals(13, leitura.buscaIndiceTitulo("eur_value"));
+        Assert.assertEquals(7, leitura.buscaIndiceTitulo("league"));
+        Assert.assertEquals(16, leitura.buscaIndiceTitulo("eur_value"));
     }
 
     @Test
     public void deveRetornarTitulosDasColunas(){
         LeituraDeCSV leitura = new LeituraDeCSV();
 
-        String[] titulos = {"ID", "name", "full_name", "club", "special", "age", "league",
-                            "birth_date", "height_cm", "weight_kg", "body_type", "real_face",
-                            "nationality", "eur_value", "eur_wage", "eur_release_clause"};
+        String[] titulos = {"ID", "name", "full_name", "club", "club_logo", "special", "age", "league",
+                            "birth_date", "height_cm", "weight_kg", "body_type", "real_face", "flag",
+                            "nationality","photo", "eur_value", "eur_wage", "eur_release_clause"};
 
-        Assert.assertArrayEquals(titulos, leitura.lerTitulos());
+        Assert.assertArrayEquals(titulos, Arrays.stream(leitura.lerTitulos()).limit(19).toArray());
     }
 }

@@ -1,9 +1,7 @@
 package controller;
 
 public class Main {
-    public static void main (String args[]){
-		LeituraDeCSV l = new LeituraDeCSV();
+    public static void main(String args []){
 
-		l.lerColuna("name").forEach(System.out::println);
-	}
+    }
 }

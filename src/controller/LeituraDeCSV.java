@@ -1,5 +1,7 @@
 package controller;
 
+import model.Jogador;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -57,20 +59,14 @@ public class LeituraDeCSV {
     }
 
     public Map<String, String> lerDuasColunas(String titulo1, String titulo2){
-        Map<String, String> mapa = new TreeMap<>(new Comparator<String>()
-        {
-            @Override
-            public int compare(String o1, String o2) {
-                return o2.compareTo(o1);
-            }
-        });
+        Map<String, String> mapa = new TreeMap<>();
 
         try {
-             Files.lines(Paths.get(caminhoArquivo()))
-                     .skip(1)
-                     .map(s -> s.split(","))
-                     .peek(s -> mapa.put(s[buscaIndiceTitulo(titulo1)], s[buscaIndiceTitulo(titulo2)]))
-                     .collect(Collectors.toList());
+            Files.lines(Paths.get(caminhoArquivo()))
+                    .skip(1)
+                    .map(s -> s.split(","))
+                    .peek(s -> mapa.put(s[buscaIndiceTitulo(titulo1)], s[buscaIndiceTitulo(titulo2)]))
+                    .collect(Collectors.toList());
         }catch(IOException e){
             erro();
         }
@@ -89,8 +85,8 @@ public class LeituraDeCSV {
                         return new Jogador(s[buscaIndiceTitulo("full_name")],
 
                                 LocalDate.of(Integer.parseInt(data.substring(0, 4)),
-                                Integer.parseInt(data.substring(5, 7)),
-                                Integer.parseInt(data.substring(8, 10))) ,
+                                        Integer.parseInt(data.substring(5, 7)),
+                                        Integer.parseInt(data.substring(8, 10))) ,
 
                                 new BigDecimal(s[buscaIndiceTitulo("eur_wage")]));
                     })
